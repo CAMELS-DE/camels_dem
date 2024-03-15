@@ -26,6 +26,16 @@ Rscript /scripts/02_extract_copernicus_dem30.R
 cp /scripts/02_extract_copernicus_dem30.R /output_data/scripts/02_extract_copernicus_dem30.R
 echo "[$(date +%T)] Saved elevation statistics for all catchments and station locations with 02_extract_copernicus_dem30.R"
 
+# Copy the output data to the camelsp output directory
+echo "[$(date +%T)] Copying the extracted data to the camelsp output directory..."
+mkdir -p /camelsp/output_data/raw_catchment_attributes/dem/copernicus_dem30/
+cp /output_data/dem_extracted.csv /camelsp/output_data/raw_catchment_attributes/dem/copernicus_dem30/
+echo "[$(date +%T)] Copied the extracted data to the camelsp output directory"
+
+# Copy scripts to /camelsp/output_data/scripts/soils/isric/
+mkdir -p /camelsp/output_data/scripts/dem/copernicus_dem30/
+cp /output_data/scripts/* /camelsp/output_data/scripts/dem/copernicus_dem30/
+
 # Change permissions of the output data
 chmod -R 777 /camelsp/output_data/
 chmod -R 777 /output_data/
