@@ -2,7 +2,7 @@
 
 ## Description
 
-Dockerized tool to extract and process data from the HUEK250 shapefile for CAMELS-DE.  
+Dockerized tool to extract and process data from the Copernicus DEM GLO-30 tif for CAMELS-DE.  
 A .csv file is created in the `output_data` folder containing derived variables from the DEM for each catchment. The extracted variables are listed below.  
 The results are copied to the camelsp `output_data` directory, where other tools process the data further and organize it in the folder structure.
 
