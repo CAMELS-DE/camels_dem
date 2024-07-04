@@ -164,3 +164,5 @@ cython_debug/
 input_data/
 output_data/
 out/
+in/
+!in/input.json
