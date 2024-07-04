@@ -1,0 +1,33 @@
+tools:
+  topographic_attributes_copernicus_dem30:
+    title: Topographic Attributes from the Copernicus GLO-30 DEM for CAMELS-DE
+    description: Process Copernicus GLO-30 data to extract topographic attributes for CAMELS-DE.
+    version: 0.1
+    parameters:
+      id_field_name_catchments:
+        example: "gauge_id"
+        type: string
+        description: Property name in the catchments file that contains the catchment IDs.
+      id_field_name_stations:
+        example: "id"
+        type: string
+        description: Property name in the stations file that contains the station IDs.
+    data:
+      catchments:
+        example: in/catchments.gpkg
+        extension:
+         - .gpkg
+         - .geojson
+         - .shp
+        description: Geometry file containing catchments for which to extract topographic attributes.
+      stations:
+        example: in/stations.gpkg
+        extension:
+         - .gpkg
+         - .geojson
+         - .shp
+        description: |
+          Geometry file containing station locations for which to extract topographic attributes.
+          Must contain the ID property with the name specified in the `id_field_name` parameter, the property 
+          `gauge_elevation` with the elevation of the station in meters (from gauge metadata), and the 
+          geometry with the location of the station.
