@@ -1,0 +1,12 @@
+{
+    "topographic_attributes_copernicus_dem30": {
+        "parameters": {
+            "id_field_name_catchments": "id",
+            "id_field_name_stations": "camels_id"
+        },
+        "data": {
+            "catchments": "/in/catchments.gpkg",
+            "stations": "/in/stations.gpkg"
+        }
+    }
+}
