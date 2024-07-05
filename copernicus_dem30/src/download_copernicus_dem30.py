@@ -17,6 +17,19 @@ def download_copernicus_dem30(catchments: gpd.GeoDataFrame):
     # Bounding box of catchments + a buffer
     lon_min, lat_min, lon_max, lat_max = catchments.total_bounds
     
+    # check if dem_merged.tif already exists
+    if os.path.exists("/in/dem/dem_merged.tif"):
+        # check if the bounding box of the catchments is within the bounding box of the dem_merged.tif
+        with rasterio.open("/in/dem/dem_merged.tif") as dem:
+            dem_bounds = dem.bounds
+            if lon_min >= dem_bounds.left and lat_min >= dem_bounds.bottom and lon_max <= dem_bounds.right and lat_max <= dem_bounds.top:
+                print("DEM already exists and covers the input catchments.")
+                return
+            else:
+                # remove the existing dem_merged.tif
+                os.remove("/in/dem/dem_merged.tif")
+                print("Removed existing DEM as it does not cover the input catchments.")
+
     # floor and ceil the bounding box
     lon_min, lat_min, lon_max, lat_max = math.floor(lon_min), math.floor(lat_min), math.ceil(lon_max), math.ceil(lat_max)
 
@@ -48,7 +61,7 @@ def download_copernicus_dem30(catchments: gpd.GeoDataFrame):
     # Create folder to save dem data if it does not exist
     if not os.path.exists("/in/dem"):
         os.makedirs("/in/dem")
-    print(tiles)
+
     # Download the tiles
     for tile in tiles:
         response = requests.get(tile)
@@ -77,6 +90,10 @@ def merge_dem_tiles():
     Merge the DEM tiles into a single raster file.
 
     """
+    # Check if dem_merged.tif already exists
+    if os.path.exists("/in/dem/dem_merged.tif"):
+        return
+    
     # List of all dem tiles
     dem_tiles = glob("/in/dem/*.tif")
 

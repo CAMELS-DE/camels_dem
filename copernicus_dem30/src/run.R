@@ -19,12 +19,8 @@ if (toolname == "") {
 
 } else if (toolname == "topographic_attributes_copernicus_dem30") {
   # run Python script to download the Copernicus DEM data if it does not exist yet
-  if (!file.exists("/in/dem/dem_merged.tif")) {
-    system("python3 /src/download_copernicus_dem30.py")
-  } else {
-    print("The Copernicus DEM data already exists, delete in/dem_merged.tif if your catchments changed and rerun the tool.")
-  }
-  
+  system("python3 /src/download_copernicus_dem30.py")
+
   # extract the Copernicus DEM data
   extract_dem_data(catchments = data$catchments,
                    stations = data$stations,
