@@ -30,8 +30,8 @@ def download_copernicus_dem30(catchments: gpd.GeoDataFrame):
                 os.remove("/in/dem/dem_merged.tif")
                 print("Removed existing DEM as it does not cover the input catchments.")
 
-    # floor and ceil the bounding box
-    lon_min, lat_min, lon_max, lat_max = math.floor(lon_min), math.floor(lat_min), math.ceil(lon_max), math.ceil(lat_max)
+    # floor of the bounding box
+    lon_min, lat_min, lon_max, lat_max = math.floor(lon_min), math.floor(lat_min), math.floor(lon_max), math.floor(lat_max)
 
     # GET all available DEM tiles
     response = requests.get("https://prism-dem-open.copernicus.eu/pd-desk-open-access/publicDemURLs/COP-DEM_GLO-30-DGED__2023_1", headers={"accept": "csv"})
