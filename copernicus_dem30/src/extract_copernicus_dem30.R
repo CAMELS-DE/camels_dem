@@ -52,6 +52,8 @@ extract_dem_data <- function(catchments, stations, id_field_name_catchments, id_
   extracted_stations$gauge_northing <- sf::st_coordinates(sf::st_transform(extracted_stations, 3035))[, 2]
   extracted_stations$gauge_easting <- sf::st_coordinates(sf::st_transform(extracted_stations, 3035))[, 1]
 
+  # move column gauge_elev to last column
+  extracted_stations <- extracted_stations[, c(setdiff(names(extracted_stations), "gauge_elev"), "gauge_elev")]
 
   # Calculate area of catchments in km²
   catchments$area <- sf::st_area(catchments) / 1e6
@@ -81,10 +83,13 @@ extract_dem_data <- function(catchments, stations, id_field_name_catchments, id_
   # put column elev_max at last column
   dem_extracted <- dem_extracted[, c(setdiff(names(dem_extracted), "elev_max"), "elev_max")]
 
-  # round to 2 decimal places except for gauge_lat and gauge_lon
-  dem_extracted[, -c(which(names(dem_extracted) %in% c("gauge_lat", "gauge_lon")))] <- round(dem_extracted[, -c(which(names(dem_extracted) %in% c("gauge_lat", "gauge_lon")))], 2)
-  # round to 6 decimal places for gauge_lat and gauge_lon
-  dem_extracted[, c(which(names(dem_extracted) %in% c("gauge_lat", "gauge_lon")))] <- round(dem_extracted[, c(which(names(dem_extracted) %in% c("gauge_lat", "gauge_lon")))], 6)
+  # Identify numeric columns excluding gauge_lat and gauge_lon
+  numeric_cols <- sapply(dem_extracted, is.numeric) & !names(dem_extracted) %in% c("gauge_lat", "gauge_lon")
+
+  # Round numeric columns to 2 decimal places
+  dem_extracted[numeric_cols] <- round(dem_extracted[numeric_cols], 2)
+  # round gauge_lat and gauge_lon to 6 decimal places
+  dem_extracted[c("gauge_lat", "gauge_lon")] <- round(dem_extracted[c("gauge_lat", "gauge_lon")], 6)
 
   # Save the extracted data
   print(paste("Saving the extracted data to /out/topographic_attributes.csv ..."))
