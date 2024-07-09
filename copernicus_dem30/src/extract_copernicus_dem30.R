@@ -1,9 +1,3 @@
-# Calculate catchment and station elecation from DEM for all CAMELS-DE stations.
-# @author: Alexander Dolich
-#
-# created: 2024/03/14
-# modified: 2024/03/14
-
 library(exactextractr)
 library(terra)
 library(sf)
