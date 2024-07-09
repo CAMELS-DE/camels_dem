@@ -1,7 +1,7 @@
 # load json2aRgs for parameter parsing
 library(json2aRgs)
 
-# load the extract_corine function
+# load the exctract_copernicus_dem30 function
 source("extract_copernicus_dem30.R")
 
 # get the parameters for the tool
